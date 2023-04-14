@@ -103,7 +103,7 @@ func (l *LoginJwt) Profile(ctx *gin.Context) {
 	})
 }
 
-func NewCredentialsJwt(u service.LoginService) *LoginJwt {
+func NewCredentialsJwt(s service.LoginService) *LoginJwt {
 	loginjwt := LoginJwt{
 		service: s,
 		jwtKey:  jwtKey,
