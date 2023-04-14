@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/subkhiyoga/auth-jwt/controll"
 	"github.com/subkhiyoga/auth-jwt/database"
-	"github.com/subkhiyoga/auth-jwt/repository"
-	"github.com/subkhiyoga/auth-jwt/usecase"
+	repository "github.com/subkhiyoga/auth-jwt/repo"
+	"github.com/subkhiyoga/auth-jwt/service"
 )
 
 func Run() {
@@ -19,8 +19,8 @@ func Run() {
 	router := gin.Default()
 
 	mahasiwaRepo := repository.NewMahasiswaRepo(db)
-	loginUsecase := usecase.NewLoginUsecase(mahasiwaRepo)
-	loginJwt := controll.NewCredentialsJwt(loginUsecase)
+	loginService := service.NewLoginService(mahasiwaRepo)
+	loginJwt := controll.NewCredentialsJwt(loginService)
 
 	// set up routes for login
 	router.POST("/login", authMiddleware, loginJwt.Login)
