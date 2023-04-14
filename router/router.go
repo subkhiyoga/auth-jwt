@@ -6,19 +6,19 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/subkhiyoga/auth-jwt/controll"
 	"github.com/subkhiyoga/auth-jwt/database"
-	repository "github.com/subkhiyoga/auth-jwt/repo"
+	"github.com/subkhiyoga/auth-jwt/repo"
 	"github.com/subkhiyoga/auth-jwt/service"
 )
 
 func Run() {
-	db := repository.ConnectDB()
+	db := repo.ConnectDB()
 	secret_key := []byte(database.DotEnv("SECRET_KEY"))
 	authMiddleware := controll.AuthMiddleware(secret_key)
 
 	// gin router
 	router := gin.Default()
 
-	mahasiwaRepo := repository.NewMahasiswaRepo(db)
+	mahasiwaRepo := repo.NewMahasiswaRepo(db)
 	loginService := service.NewLoginService(mahasiwaRepo)
 	loginJwt := controll.NewCredentialsJwt(loginService)
 
