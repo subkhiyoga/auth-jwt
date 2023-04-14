@@ -29,15 +29,15 @@ func ConnectDB() *sql.DB {
 	return db
 }
 
-type LoginRepository interface {
+type LoginRepo interface {
 	GetByUnameAndPassword(username string, password string) (*model.Credentials, error)
 }
 
-type loginRepository struct {
+type loginRepo struct {
 	db *sql.DB
 }
 
-func (r *loginRepository) GetByUnameAndPassword(username string, password string) (*model.Credentials, error) {
+func (r *loginRepo) GetByUnameAndPassword(username string, password string) (*model.Credentials, error) {
 	query := "SELECT c.username, c.password FROM credentials c JOIN mahasiswa m ON c.username = m.user_name WHERE c.username = $1 AND c.password = $2"
 	row := r.db.QueryRow(query, username, password)
 
@@ -55,8 +55,8 @@ func (r *loginRepository) GetByUnameAndPassword(username string, password string
 	return c, nil
 }
 
-func NewMahasiswaRepo(db *sql.DB) LoginRepository {
-	repo := new(loginRepository)
+func NewMahasiswaRepo(db *sql.DB) LoginRepo {
+	repo := new(loginRepo)
 	repo.db = db
 
 	return repo

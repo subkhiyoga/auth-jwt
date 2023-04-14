@@ -3,6 +3,7 @@ module github.com/subkhiyoga/auth-jwt
 go 1.20
 
 require (
+	github.com/Thevtok/auth v0.0.0-20230414151601-df0a449261af
 	github.com/bytedance/sonic v1.8.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect

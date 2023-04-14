@@ -7,11 +7,11 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/subkhiyoga/auth-jwt/model"
-	"github.com/subkhiyoga/auth-jwt/usecase"
+	"github.com/subkhiyoga/auth-jwt/service"
 )
 
 type LoginJwt struct {
-	usecase usecase.LoginUsecase
+	service service.LoginService
 	jwtKey  []byte
 }
 
@@ -71,7 +71,7 @@ func (l *LoginJwt) Login(ctx *gin.Context) {
 		return
 	}
 
-	credentials, err := l.usecase.Login(c.Username, c.Password)
+	credentials, err := l.service.Login(c.Username, c.Password)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "server error"})
 		return
@@ -103,9 +103,9 @@ func (l *LoginJwt) Profile(ctx *gin.Context) {
 	})
 }
 
-func NewCredentialsJwt(u usecase.LoginUsecase) *LoginJwt {
+func NewCredentialsJwt(u service.LoginService) *LoginJwt {
 	loginjwt := LoginJwt{
-		usecase: u,
+		service: s,
 		jwtKey:  jwtKey,
 	}
 
