@@ -21,7 +21,7 @@ func generateToken(cre *model.Credentials) (string, error) {
 	// set token claims
 	claims := jwt.MapClaims{}
 	claims["username"] = cre.Username
-	claims["exp"] = time.Now().Add(time.Minute * 1).Unix() // mengatur masa waktu token
+	claims["exp"] = time.Now().Add(time.Hour * 12).Unix() // mengatur masa waktu token
 
 	// create token with claims and secret key
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -89,18 +89,6 @@ func (l *LoginJwt) Login(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"token": token})
-}
-
-func (l *LoginJwt) Profile(ctx *gin.Context) {
-	// ambil username dari JWT token
-	claims := ctx.MustGet("claims").(jwt.MapClaims)
-	username := claims["username"].(string)
-
-	// dapatkan informasi user dari database (dalam hal ini, return username)
-	ctx.JSON(http.StatusOK, gin.H{
-		"message":  "Welcome to profile",
-		"username": username,
-	})
 }
 
 func NewCredentialsJwt(s service.LoginService) *LoginJwt {
