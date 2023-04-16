@@ -21,7 +21,7 @@ func generateToken(cre *model.Credentials) (string, error) {
 	// set token claims
 	claims := jwt.MapClaims{}
 	claims["username"] = cre.Username
-	claims["exp"] = time.Now().Add(time.Hour * 12).Unix() // mengatur masa waktu token
+	claims["exp"] = time.Now().Add(time.Minute * 1).Unix() // mengatur masa waktu token
 
 	// create token with claims and secret key
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
